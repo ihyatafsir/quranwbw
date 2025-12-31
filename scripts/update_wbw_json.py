@@ -139,18 +139,18 @@ if __name__ == "__main__":
             for i in range(limit):
                 existing_word = w_list[i]
                 
-                # Restore 'd' (transliteration) from standard 'en'
-                if i < len(std_entries):
-                    std_data = std_entries[i]
-                    if 'en' in std_data:
-                        existing_word['d'] = std_data['en']
-                        modified = True
-                        
-                # Update 'e' (translation) from special 'en'
+                # Update 'd' (transliteration) from SPECIAL 'en' (RTL) - User Request: Populated on Top
                 if special_entries and i < len(special_entries):
                     spec_data = special_entries[i]
                     if 'en' in spec_data:
-                        existing_word['e'] = spec_data['en']
+                        existing_word['d'] = spec_data['en']
+                        modified = True
+
+                # Update 'e' (translation) from STANDARD 'en' (Fallback/Standard Translit) - Populated on Bottom
+                if i < len(std_entries):
+                    std_data = std_entries[i]
+                    if 'en' in std_data:
+                        existing_word['e'] = std_data['en']
                         modified = True
 
         if modified:

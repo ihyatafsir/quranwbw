@@ -467,21 +467,24 @@ w-a:hover {
 .TRL,
 .wl,
 w-l {
-    font-size: 10px;
-    font-family: arial;
-    color: #999;
-    direction: ltr
-}
-
-.wt,
-w-t {
     font-size: 22px;
     font-family: 'kitab', 'noorehuda', 'noorehidayat', serif;
     color: #444;
     direction: rtl;
+    padding-bottom: 5px;
+}
+
+.wt,
+w-t {
+    font-size: 14px;
+    font-family: arial, sans-serif;
+    color: #555;
+    direction: ltr;
     padding-top: 5px;
     padding-bottom: 25px;
 }
+
+
 
 .a-n,
 .ayah-number {
