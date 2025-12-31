@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ihya Commentary Index - Quran WBW</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { opacity: 0; transition: opacity 0.5s ease; }
+        body.loaded { opacity: 1; }
+    </style>
+</head>
+<body class="index-page">
+    <div class="index-container">
+        <div class="header-section">
+            <a href="index.html" class="btn btn-outline-secondary mb-4" style="border-radius: 50px; padding: 5px 20px;">&larr; Back to Home</a>
+            <h1>Ihya Commentary Index</h1>
+            <p class="text-muted">A complete list of verses with Tafsir Al-Ihya commentary</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="indexSearch" class="search-input" placeholder="Search by surah, ayah, or book...">
+        </div>
+
+        <div id="commentaryGrid" class="commentary-grid">
+            <div class="text-center w-100 py-5">
+                <div class="spinner-border text-warning" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates -->
+    <template id="cardTemplate">
+        <a href="" class="commentary-card">
+            <div class="card-meta">
+                <span class="verse-key-badge"></span>
+                <span class="book-title"></span>
+            </div>
+            <div class="commentary-snippet-ar"></div>
+            <div class="commentary-snippet-en"></div>
+        </a>
+    </template>
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let fullData = [];
+            const grid = $('#commentaryGrid');
+            const template = document.getElementById('cardTemplate');
+
+            function renderCards(data) {
+                grid.empty();
+                if (data.length === 0) {
+                    grid.append('<div class="no-results">No entries found matching your search.</div>');
+                    return;
+                }
+
+                data.forEach(item => {
+                    const clone = template.content.cloneNode(true);
+                    const card = clone.querySelector('.commentary-card');
+                    
+                    card.href = `surahs/${item.surah}.html#${item.ayah}`;
+                    clone.querySelector('.verse-key-badge').textContent = `${item.verse_key}`;
+                    clone.querySelector('.book-title').textContent = item.book;
+                    clone.querySelector('.commentary-snippet-ar').textContent = item.arabic;
+                    clone.querySelector('.commentary-snippet-en').textContent = item.english;
+                    
+                    grid.append(clone);
+                });
+            }
+
+            // Load data
+            fetch('assets/data/ihya_index.json')
+                .then(response => response.json())
+                .then(data => {
+                    fullData = data;
+                    renderCards(fullData);
+                    $('body').addClass('loaded');
+                })
+                .catch(err => {
+                    console.error('Error loading index:', err);
+                    grid.html('<div class="alert alert-danger">Error loading commentary index. Please try again.</div>');
+                    $('body').addClass('loaded');
+                });
+
+            // Search functionality
+            $('#indexSearch').on('input', function() {
+                const query = $(this).val().toLowerCase();
+                const filtered = fullData.filter(item => 
+                    item.verse_key.toLowerCase().includes(query) ||
+                    item.book.toLowerCase().includes(query) ||
+                    item.english.toLowerCase().includes(query) ||
+                    item.arabic.includes(query)
+                );
+                renderCards(filtered);
+            });
+        });
+    </script>
+</body>
+</html>
