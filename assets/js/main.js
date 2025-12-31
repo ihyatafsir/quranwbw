@@ -17,17 +17,114 @@ function toggle_display_mode() {
     var a = document.getElementById("display_mode"); "Word By Word" == a.innerHTML ? (a.innerHTML = "Normal", document.getElementById("normalmode") ? $("#normalmode").prop("disabled", !1) : $("head").append('<link rel="stylesheet" href="../assets/css/normal.css" id="normalmode"/>'), localStorage.setItem("toggle_display_mode_disabled", "false"), localStorage.setItem("toggle_display_mode_change", "Normal")) : (a.innerHTML = "Word By Word", $("#normalmode").prop("disabled", !0), localStorage.setItem("toggle_display_mode_disabled",
         "true"), localStorage.setItem("toggle_display_mode_change", "Word By Word"))
 } function toggle_auto_scroll() { var a = document.getElementById("auto_scroll"); "Yes" == a.innerHTML ? (a.innerHTML = "No", localStorage.setItem("auto_scroll", "No")) : (a.innerHTML = "Yes", localStorage.setItem("auto_scroll", "Yes")) }
+// Theme Management
+function toggleTheme() {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+}
+
+function updateThemeIcon(theme) {
+    const icon = theme === 'light' ? '🌙' : '☀️';
+    $("#theme-toggle").text(icon);
+}
+
+// Ensure theme is applied on load
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', savedTheme);
+
+// Translation Management
+let currentTranslation = localStorage.getItem('translation') || 'english'; // 'english' or 'haleem'
+let haleemData = null;
+
+async function loadHaleemData() {
+    if (!haleemData) {
+        try {
+            const response = await fetch('../assets/data/en_haleem.json');
+            haleemData = await response.json();
+        } catch (e) {
+            console.error("Failed to load Haleem translation", e);
+        }
+    }
+}
+
+function setTranslation(type) {
+    currentTranslation = type;
+    localStorage.setItem('translation', type);
+    if (type === 'haleem') {
+        loadHaleemData().then(() => {
+            if (activeSurah) loadAyahs(activeSurah, 1, surah_ayahs, true); // Reload current surah with new translation
+        });
+    } else {
+        if (activeSurah) loadAyahs(activeSurah, 1, surah_ayahs, true); // Reload current surah with new translation
+    }
+    updateTranslationUI();
+}
+
+function updateTranslationUI() {
+    $(".translation-selector").removeClass("active");
+    $(`.translation-selector[data-type="${currentTranslation}"]`).addClass("active");
+}
+
+$(document).ready(function () {
+    updateThemeIcon(savedTheme);
+    updateTranslationUI();
+    if (currentTranslation === 'haleem') loadHaleemData();
+
+    // Inject controls into navbar settings area
+    const controlsHtml = `
+        <div class="nav-item">
+            <button id="theme-toggle" class="btn btn-link nav-link" onclick="toggleTheme()" style="font-size: 1.2rem;">🌙</button>
+        </div>
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="translationDropdown" role="button" data-toggle="dropdown">
+                Translation
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item translation-selector" href="#" onclick="setTranslation('english')" data-type="english">Saheeh International</a>
+                <a class="dropdown-item translation-selector" href="#" onclick="setTranslation('haleem')" data-type="haleem">Abdel Haleem</a>
+            </div>
+        </div>
+    `;
+    // Find a place to append. Maybe .navbar-nav.ml-auto? 
+    // The existing navbar structure needs to be checked.
+    if ($(".navbar-nav.ml-auto").length) {
+        $(".navbar-nav.ml-auto").prepend(controlsHtml);
+    }
+});
+
+var surah_names = ["Fatihah", "Baqarah", "Ali 'Imran", "Nisa", "Ma'idah", "An'am", "A'raf", "Anfal", "Tawbah", "Yunus", "Hud", "Yusuf", "Ra'd", "Ibrahim", "Hijr", "Nahl", "Isra", "Kahf", "Maryam", "Taha", "Anbiya", "Hajj", "Mu'minun", "Nur", "Furqan", "Shu'ara", "Naml", "Qasas", "Ankabut", "Rum", "Luqman", "Sajdah", "Ahzab", "Saba", "Fatir", "Ya-Sin", "Saffat", "Sad", "Zumar", "Ghafir", "Fussilat", "Shura", "Zukhruf", "Dukhan", "Jathiyah", "Ahqaf", "Muhammad", "Fath", "Hujurat", "Qaf", "Dhariyat", "Tur", "Najm", "Qamar", "Rahman", "Waqi'ah", "Hadid", "Mujadila", "Hashr", "Mumtahanah", "Saff", "Jumu'ah", "Munafiqun", "Taghabun", "Talaq", "Tahrim", "Mulk", "Qalam", "Haqqah", "Ma'arij", "Nuh", "Jinn", "Muzzammil", "Muddathir", "Qiyamah", "Insan", "Mursalat", "Naba", "Nazi'at", "'Abasa", "Takwir", "Infitar", "Mutaffifin", "Inshiqaq", "Buruj", "Tariq", "A'la", "Ghashiyah", "Fajr", "Balad", "Shams", "Layl", "Duha", "Sharh", "Tin", "'Alaq", "Qadr", "Bayyinah", "Zalzalah", "'Adiyat", "Qari'ah", "Takathur", "'Asr", "Humazah", "Fil", "Quraysh", "Ma'un", "Kawthar", "Kafirun", "Nasr", "Masad", "Ikhlas", "Falaq", "Nas"];
+var activeSurah = null; // Track active surah
+
 function toggle_reciter() {
     var a = document.getElementById("reciter"); "Mishary Rashid Alafasy" == a.innerHTML ? (a.innerHTML = "Yasser Al Dossari", localStorage.setItem("reciter_name", "Yasser Al Dossari"), localStorage.setItem("reciter", "2")) : "Yasser Al Dossari" == a.innerHTML ? (a.innerHTML = "Mahmoud Khalil Al-Husary", localStorage.setItem("reciter_name", "Mahmoud Khalil Al-Husary"), localStorage.setItem("reciter", "3")) : "Mahmoud Khalil Al-Husary" == a.innerHTML && (a.innerHTML = "Mishary Rashid Alafasy", localStorage.setItem("reciter_name",
         "Mishary Rashid Alafasy"), localStorage.setItem("reciter", "1"))
 }
-function loadAyahs(a, c, e) {
-    localStorage.getItem("reciter"); $.getJSON("data/" + a + ".json", function (b) {
+function loadAyahs(a, c, e, clear_content = false) {
+    activeSurah = a;
+    localStorage.getItem("reciter");
+    if (clear_content) {
+        $(".full-surah").empty();
+    }
+    $.getJSON("data/" + a + ".json", function (b) {
         var d, f, g = Object.keys(b).length; for (d = c; d <= e; d++) {
-            var k = b[d].w.length, h = b[d].a.g;
+            var k = b[d].w.length;
+            var h = b[d].a.g; // Default translation
+
+            // Switch to Haleem if selected and available
+            if (currentTranslation === 'haleem' && haleemData) {
+                var key = a + "_" + d;
+                if (haleemData[key]) {
+                    h = haleemData[key];
+                }
+            }
+
             var m = "<div class='col-11 s-a " + a + "' id=" + d + "><div class=a><div class='w a-n-a'><h3 class=a-n>" + d + "</h3></div>", l = ""; for (f = 0; f <= k - 1; f++) {
                 try {
-                    var n = b[d].w[f].b, p = b[d].w[f].h, word_arabic = b[d].w[f].c, word_transliteration = b[d].w[f].d, word_translation = b[d].w[f].e; l += "<span class=sw data-ts-mishary=" + n + " data-ts-husary=" + p + "><span class=wl>" +
+                    var n = b[d].w[f].b, p = b[d].w[f].h, word_arabic = b[d].w[f].c, word_transliteration = b[d].w[f].d, word_translation = b[d].w[f].e;
+                    l += "<span class=sw data-ts-mishary=" + n + " data-ts-husary=" + p + "><span class=wl>" +
                         word_transliteration + "</span><span class=wa>" + word_arabic + "</span><span class=wt>" + word_translation + "</span></span>"
                 } catch (err) { console.error("Error in Ayah " + d + " word " + f, err); }
             } sajda_surahs.includes(a) && (f = sajda_surahs.indexOf(a), d == sajda_ayahs[f] && (l += "<span class='sw sajda-icon'></span>"));
