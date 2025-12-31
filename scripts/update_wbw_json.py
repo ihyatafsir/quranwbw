@@ -78,13 +78,14 @@ def update_surah_files(data_dir, allwords_map):
                 # Update fields
                 # 'd' (transliteration) <- 'en' from allwords
                 # 'e' (meaning) <- 'in' from allwords
-                
+                # Update transliteration (d)
                 if 'en' in new_data:
                     existing_word['d'] = new_data['en']
                     modified = True
                 
-                if 'in' in new_data:
-                    existing_word['e'] = new_data['in']
+                # Update translation (e) - User requested 'en' column (replacing previous 'in')
+                if 'en' in new_data:
+                    existing_word['e'] = new_data['en'] # Use EN for translation as well
                     modified = True
                     
         if modified:
