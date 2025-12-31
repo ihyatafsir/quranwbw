@@ -15,6 +15,24 @@
 }
 
 @font-face {
+    font-family: 'kitab';
+    src: url(../../assets/fonts/kitab.ttf) format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'noorehuda';
+    src: url(../../assets/fonts/noorehuda.ttf) format('truetype');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'noorehidayat';
+    src: url(../../assets/fonts/noorehidayat.ttf) format('truetype');
+    font-display: swap;
+}
+
+@font-face {
     font-family: Cabin;
     src: local('Cabin-Bold');
     src: url(../../assets/fonts/Cabin-Bold.eot);
@@ -457,14 +475,10 @@ w-l {
 
 .wt,
 w-t {
-    font-size: 18px;
-    /* Larger font for diacritics */
-    font-family: "IndoPak", arial, serif;
-    /* Try IndoPak for Arabic diacritics support */
-    color: #555;
-    /* Darker for visibility */
+    font-size: 22px;
+    font-family: 'kitab', 'noorehuda', 'noorehidayat', serif;
+    color: #444;
     direction: rtl;
-    /* Crucial for valid rendering */
     padding-top: 5px;
     padding-bottom: 25px;
 }
