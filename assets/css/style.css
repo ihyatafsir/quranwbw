@@ -1,6 +1,6 @@
 @font-face {
     font-family: Uthmani;
-    src: url(../../assets/fonts/Uthmani.woff2) format('woff2'), url(../../assets/fonts/Uthmani.woff) format('woff');
+    src: url(../fonts/Uthmani.woff2) format('woff2'), url(../fonts/Uthmani.woff) format('woff');
     font-weight: 400;
     font-style: normal;
     font-display: swap
@@ -8,7 +8,7 @@
 
 @font-face {
     font-family: IndoPak;
-    src: url(../../assets/fonts/IndoPak.woff2) format('woff2'), url(../../assets/fonts/IndoPak.woff) format('woff');
+    src: url(../fonts/IndoPak.woff2) format('woff2'), url(../fonts/IndoPak.woff) format('woff');
     font-weight: 400;
     font-style: normal;
     font-display: swap
@@ -16,27 +16,27 @@
 
 @font-face {
     font-family: 'kitab';
-    src: url(../../assets/fonts/kitab.ttf) format('truetype');
+    src: url(../fonts/kitab.ttf) format('truetype');
     font-display: swap;
 }
 
 @font-face {
     font-family: 'noorehuda';
-    src: url(../../assets/fonts/noorehuda.ttf) format('truetype');
+    src: url(../fonts/noorehuda.ttf) format('truetype');
     font-display: swap;
 }
 
 @font-face {
     font-family: 'noorehidayat';
-    src: url(../../assets/fonts/noorehidayat.ttf) format('truetype');
+    src: url(../fonts/noorehidayat.ttf) format('truetype');
     font-display: swap;
 }
 
 @font-face {
     font-family: Cabin;
     src: local('Cabin-Bold');
-    src: url(../../assets/fonts/Cabin-Bold.eot);
-    src: url(../../assets/fonts/Cabin-Bold.eot?#iefix) format('embedded-opentype'), url(../../assets/fonts/Cabin-Bold.woff2) format('woff2'), url(../../assets/fonts/Cabin-Bold.woff) format('woff'), url(../../assets/fonts/Cabin-Bold.ttf) format('truetype');
+    src: url(../fonts/Cabin-Bold.eot);
+    src: url(../fonts/Cabin-Bold.eot?#iefix) format('embedded-opentype'), url(../fonts/Cabin-Bold.woff2) format('woff2'), url(../fonts/Cabin-Bold.woff) format('woff'), url(../fonts/Cabin-Bold.ttf) format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap
@@ -467,8 +467,8 @@ w-a:hover {
 .TRL,
 .wl,
 w-l {
-    font-size: 22px;
-    font-family: 'kitab', 'noorehuda', 'noorehidayat', serif;
+    font-size: 24px;
+    font-family: 'noorehuda', 'kitab', 'noorehidayat', serif;
     color: #444;
     direction: rtl;
     padding-bottom: 5px;
