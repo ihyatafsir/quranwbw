@@ -433,9 +433,25 @@ w-t {
 .word,
 s-w {
     text-align: center;
-    float: right;
     margin: 0 8px;
     cursor: pointer
+}
+
+.w,
+.word {
+    direction: rtl;
+    text-align: right;
+    display: block;
+    width: 100%;
+}
+
+.sw {
+    display: inline-flex !important;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: top;
+    margin: 0 4px;
+    text-align: center;
 }
 
 .AR,
@@ -485,7 +501,7 @@ w-t {
     direction: ltr;
     text-align: center;
     padding-top: 5px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     display: block;
     width: 100%;
 }
