@@ -96,7 +96,7 @@ def update_surah_files(data_dir, allwords_map):
             print(f"No changes for {filename}")
 
 if __name__ == "__main__":
-    allwords_path = "/home/absolut7/Documents/ihyatafsirwebsite_2/quranwbw/allwords.json"
+    allwords_path = "/home/absolut7/Documents/allwords.json"
     surah_data_dir = "/home/absolut7/Documents/ihyatafsirwebsite_2/quranwbw/surahs/data"
     
     if not os.path.exists(allwords_path):
