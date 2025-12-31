@@ -484,7 +484,7 @@ w-a:hover {
 .wl,
 w-l {
     font-size: 24px;
-    font-family: 'noorehuda', 'kitab', 'noorehidayat', serif;
+    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
     color: #444;
     direction: ltr;
     text-align: center;
@@ -495,9 +495,9 @@ w-l {
 
 .wt,
 w-t {
-    font-size: 14px;
-    font-family: arial, sans-serif;
-    color: #555;
+    font-size: 24px;
+    font-family: 'noorehuda', 'kitab', 'noorehidayat', serif;
+    color: #444;
     direction: ltr;
     text-align: center;
     padding-top: 5px;
