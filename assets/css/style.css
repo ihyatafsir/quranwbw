@@ -471,7 +471,10 @@ w-l {
     font-family: 'noorehuda', 'kitab', 'noorehidayat', serif;
     color: #444;
     direction: rtl;
+    text-align: center;
     padding-bottom: 5px;
+    display: block;
+    width: 100%;
 }
 
 .wt,
@@ -480,8 +483,19 @@ w-t {
     font-family: arial, sans-serif;
     color: #555;
     direction: ltr;
+    text-align: center;
     padding-top: 5px;
-    padding-bottom: 25px;
+    padding-bottom: 10px;
+    display: block;
+    width: 100%;
+}
+
+.sw {
+    display: inline-flex !important;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: top;
+    margin: 0 4px;
 }
 
 
