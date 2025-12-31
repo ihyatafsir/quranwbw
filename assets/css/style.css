@@ -448,27 +448,25 @@ w-a:hover {
 .TR,
 .TRL,
 .wl,
-.wt,
-w-l,
-w-t {
+w-l {
     font-size: 10px;
     font-family: arial;
     color: #999;
     direction: ltr
 }
 
-.TRL,
-.wl,
-w-l {
-    padding-top: 5px;
-    padding-bottom: 10px
-}
-
-.TR,
 .wt,
 w-t {
-    padding-top: 10px;
-    padding-bottom: 30px
+    font-size: 18px;
+    /* Larger font for diacritics */
+    font-family: "IndoPak", arial, serif;
+    /* Try IndoPak for Arabic diacritics support */
+    color: #555;
+    /* Darker for visibility */
+    direction: rtl;
+    /* Crucial for valid rendering */
+    padding-top: 5px;
+    padding-bottom: 25px;
 }
 
 .a-n,
