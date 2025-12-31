@@ -96,12 +96,64 @@ def update_surah_files(data_dir, allwords_map):
             print(f"No changes for {filename}")
 
 if __name__ == "__main__":
-    allwords_path = "/home/absolut7/Documents/allwords.json"
+    standard_allwords_path = "/home/absolut7/Documents/ihyatafsirwebsite_2/quranwbw/allwords.json"
+    special_allwords_path = "/home/absolut7/Documents/allwords.json"
     surah_data_dir = "/home/absolut7/Documents/ihyatafsirwebsite_2/quranwbw/surahs/data"
     
-    if not os.path.exists(allwords_path):
-        print(f"Error: {allwords_path} not found.")
+    if not os.path.exists(standard_allwords_path) or not os.path.exists(special_allwords_path):
+        print(f"Error: One of the allwords files not found.")
         exit(1)
         
-    allwords_map = load_allwords(allwords_path)
-    update_surah_files(surah_data_dir, allwords_map)
+    std_map = load_allwords(standard_allwords_path)
+    special_map = load_allwords(special_allwords_path)
+    
+    # Update function needs to handle two maps
+    files = glob.glob(os.path.join(surah_data_dir, "*.json"))
+    print(f"Found {len(files)} surah files in {surah_data_dir}")
+    
+    for file_path in files:
+        filename = os.path.basename(file_path)
+        try:
+            surah_num = int(filename.split('.')[0])
+        except ValueError:
+            continue
+            
+        # print(f"Processing Surah {surah_num}...") 
+        
+        with open(file_path, 'r', encoding='utf-8') as f:
+            surah_data = json.load(f)
+            
+        modified = False
+        
+        for ayah_key, content in surah_data.items():
+            ayah_num = int(ayah_key)
+            w_list = content.get('w', [])
+            
+            std_entries = std_map.get((surah_num, ayah_num))
+            special_entries = special_map.get((surah_num, ayah_num))
+            
+            if not std_entries: continue # Should generally exist
+            
+            limit = len(w_list)
+            
+            for i in range(limit):
+                existing_word = w_list[i]
+                
+                # Restore 'd' (transliteration) from standard 'en'
+                if i < len(std_entries):
+                    std_data = std_entries[i]
+                    if 'en' in std_data:
+                        existing_word['d'] = std_data['en']
+                        modified = True
+                        
+                # Update 'e' (translation) from special 'en'
+                if special_entries and i < len(special_entries):
+                    spec_data = special_entries[i]
+                    if 'en' in spec_data:
+                        existing_word['e'] = spec_data['en']
+                        modified = True
+
+        if modified:
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(surah_data, f, ensure_ascii=False, separators=(',', ':'))
+
