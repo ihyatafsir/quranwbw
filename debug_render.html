@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+    @font-face {
+        font-family: 'AmiriQuran';
+        src: url('assets/fonts/AmiriQuran.ttf') format('truetype');
+    }
+
+    @font-face {
+        font-family: 'Hafs';
+        src: url('assets/fonts/hafs.otf') format('opentype');
+    }
+
+    @font-face {
+        font-family: 'KitabTest';
+        src: url('assets/fonts/kitab.ttf') format('truetype');
+    }
+
+    .test-row {
+        margin: 20px 0;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    .label {
+        font-weight: bold;
+        width: 150px;
+        display: inline-block;
+    }
+
+    .sample {
+        font-size: 24px;
+        direction: rtl;
+    }
+</style>
+</head>
+
+<body>
+    <h1>Font Rendering Test</h1>
+    <h3>Target String: ِmْsِb (Latin 'm', 's', 'b' + Arabic Kasra, Sukun)</h3>
+
+    <div class="test-row">
+        <span class="label">Arial (System)</span>
+        <span class="sample" style="font-family: Arial, sans-serif;">ِmْsِb</span>
+    </div>
+    <div class="test-row">
+        <span class="label">Times New Roman</span>
+        <span class="sample" style="font-family: 'Times New Roman', serif;">ِmْsِb</span>
+    </div>
+    <div class="test-row">
+        <span class="label">AmiriQuran (APK)</span>
+        <span class="sample" style="font-family: 'AmiriQuran', serif;">ِmْsِb</span>
+    </div>
+    <div class="test-row">
+        <span class="label">Hafs (APK)</span>
+        <span class="sample" style="font-family: 'Hafs', serif;">ِmْsِb</span>
+    </div>
+    <div class="test-row">
+        <span class="label">Kitab (Current)</span>
+        <span class="sample" style="font-family: 'KitabTest', serif;">ِmْsِb</span>
+    </div>
+    <div class="test-row">
+        <span class="label">Noorehuda (Current)</span>
+        <span class="sample" style="font-family: 'noorehuda', serif;">ِmْsِb</span>
+    </div>
+</body>
+
+</html>
