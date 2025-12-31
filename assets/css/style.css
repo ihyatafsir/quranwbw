@@ -24,14 +24,6 @@
     font-display: swap
 }
 
-@font-face {
-    font-family: noorehuda;
-    src: url(../../assets/fonts/noorehuda.ttf) format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap
-}
-
 :root {
     --bg-color: #fff;
     --text-color: #333;
@@ -465,11 +457,12 @@ w-l {
 
 .wt,
 w-t {
-    font-size: 22px;
-    /* Increased for better visibility of diacritics */
-    font-family: "noorehuda", serif;
-    /* Use noorehuda for correct RTL rendering */
-    color: #444;
+    font-size: 18px;
+    /* Larger font for diacritics */
+    font-family: "IndoPak", arial, serif;
+    /* Try IndoPak for Arabic diacritics support */
+    color: #555;
+    /* Darker for visibility */
     direction: rtl;
     /* Crucial for valid rendering */
     padding-top: 5px;
