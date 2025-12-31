@@ -129,29 +129,25 @@ if __name__ == "__main__":
             ayah_num = int(ayah_key)
             w_list = content.get('w', [])
             
-            std_entries = std_map.get((surah_num, ayah_num))
             special_entries = special_map.get((surah_num, ayah_num))
             
-            if not std_entries: continue # Should generally exist
+            if not special_entries: continue 
             
-            limit = len(w_list)
+            limit = min(len(w_list), len(special_entries))
             
             for i in range(limit):
                 existing_word = w_list[i]
+                spec_data = special_entries[i]
                 
-                # Update 'd' (transliteration) from SPECIAL 'en' (RTL) - User Request: Populated on Top
-                if special_entries and i < len(special_entries):
-                    spec_data = special_entries[i]
-                    if 'en' in spec_data:
-                        existing_word['d'] = spec_data['en']
-                        modified = True
+                # Update 'd' (transliteration) from SPECIAL 'en' (RTL)
+                if 'en' in spec_data:
+                    existing_word['d'] = spec_data['en']
+                    modified = True
 
-                # Update 'e' (translation) from STANDARD 'en' (Fallback/Standard Translit) - Populated on Bottom
-                if i < len(std_entries):
-                    std_data = std_entries[i]
-                    if 'en' in std_data:
-                        existing_word['e'] = std_data['en']
-                        modified = True
+                # Update 'e' (meaning) from SPECIAL 'in' (Indonesian Meaning) - Replaces Normal Translit
+                if 'in' in spec_data:
+                    existing_word['e'] = spec_data['in']
+                    modified = True
 
         if modified:
             with open(file_path, 'w', encoding='utf-8') as f:
