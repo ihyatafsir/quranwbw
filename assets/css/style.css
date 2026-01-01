@@ -435,7 +435,7 @@ w-t {
 .word,
 s-w {
     text-align: center;
-    margin: 0 8px;
+    margin: 0 10px;
     cursor: pointer
 }
 
@@ -452,7 +452,7 @@ s-w {
     flex-direction: column;
     align-items: center;
     vertical-align: top;
-    margin: 0 4px;
+    margin: 0 10px;
     text-align: center;
 }
 
@@ -500,6 +500,8 @@ w-t {
     padding-bottom: 20px;
     display: block;
     width: 100%;
+    white-space: nowrap;
+    direction: ltr !important;
 }
 
 .sw {
@@ -507,7 +509,7 @@ w-t {
     flex-direction: column;
     align-items: center;
     vertical-align: top;
-    margin: 0 4px;
+    margin: 0 10px;
 }
 
 
@@ -940,6 +942,7 @@ a.surah-name-duas:hover {
         background-size: 20px;
     }
 }
+
 /* Ihya Tafsir Styling */
 .ihya-container {
     direction: ltr;

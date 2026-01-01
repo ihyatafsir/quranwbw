@@ -51,6 +51,14 @@ def inject_tafsir():
     with open(master_path, 'r', encoding='utf-8') as f:
         master_data = json.load(f)
 
+    # Load Book Metadata
+    meta_path = '/home/absolut7/Documents/ihya_love/book_metadata.json'
+    print(f"Loading {meta_path}...")
+    book_meta = {}
+    if os.path.exists(meta_path):
+        with open(meta_path, 'r', encoding='utf-8') as f:
+            book_meta = json.load(f)
+
     verse_map = defaultdict(list)
     
     print("Grouping and Mapping commentaries...")
@@ -132,7 +140,18 @@ def inject_tafsir():
                 
                 for idx, comm in enumerate(commentaries):
                     book_src_raw = comm.get('book_source', 'Unknown Book')
-                    book_src_display = book_src_raw.replace('.doc', '').replace('-', ' ')
+                    
+                    # Display Name from Metadata
+                    if book_src_raw in book_meta:
+                        book_info = book_meta[book_src_raw]
+                        book_src_display = book_info.get('english_title', book_src_raw)
+                        # Optional: Add Volume? "Vol 1: Book of Knowledge"
+                        vol = book_info.get('vol', '')
+                        if vol:
+                            book_src_display = f"Vol {vol}: {book_src_display}"
+                    else:
+                        book_src_display = book_src_raw.replace('.doc', '').replace('-', ' ')
+
                     english_text = comm.get('english_commentary', '')
                     arabic_text = comm.get('arabic_commentary', '')
                     
@@ -140,12 +159,7 @@ def inject_tafsir():
                     book_file = find_book_file(book_src_raw)
                     book_link = "#"
                     if book_file:
-                        book_link = f"../books/{book_file}" # Relative to surah page (which is in surahs/ so go up ../books) NO: Surah pages are in surahs/. index is in root.
-                        # Wait, surah pages are generated? No, main.js loads data.
-                        # The HTML is rendered dynamically in main.js.
-                        # If user is at /1.html (root) or /surahs/1.html?
-                        # The file structure: quranwbw/surahs/1.html.
-                        # So link should be: ../books/filename.
+                        book_link = f"../books/{book_file}" # Relative to surah page
                     
                     if idx > 0:
                         html_parts.append("<hr style='border-top: 1px dashed #ddd; margin: 15px 0;'>")
