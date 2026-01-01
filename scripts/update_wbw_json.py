@@ -138,15 +138,18 @@ if __name__ == "__main__":
             for i in range(limit):
                 existing_word = w_list[i]
                 spec_data = special_entries[i]
+                std_entries = std_map.get((surah_num, ayah_num), [])
                 
-                # Update 'd' (transliteration) from SPECIAL 'en' (RTL)
-                if 'en' in spec_data:
-                    existing_word['d'] = spec_data['en']
-                    modified = True
+                # 1. Update 'd' (transliteration TOP) from STANDARD 'en' 
+                if i < len(std_entries):
+                    std_data = std_entries[i]
+                    if 'en' in std_data:
+                        existing_word['d'] = std_data['en']
+                        modified = True
 
-                # Update 'e' (meaning) from SPECIAL 'in' (Indonesian Meaning) - Replaces Normal Translit
-                if 'in' in spec_data:
-                    existing_word['e'] = spec_data['in']
+                # 2. Update 'e' (transliteration BOTTOM) from SPECIAL 'en' (RTL)
+                if 'en' in spec_data:
+                    existing_word['e'] = spec_data['en']
                     modified = True
 
         if modified:

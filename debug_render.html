@@ -1,68 +1,107 @@
 <!DOCTYPE html>
 <html>
 
-<style>
-    @font-face {
-        font-family: 'AmiriQuran';
-        src: url('assets/fonts/AmiriQuran.ttf') format('truetype');
-    }
+<head>
+    <style>
+        @font-face {
+            font-family: 'noorehuda';
+            src: url('assets/fonts/noorehuda.ttf') format('truetype');
+        }
 
-    @font-face {
-        font-family: 'Hafs';
-        src: url('assets/fonts/hafs.otf') format('opentype');
-    }
+        body {
+            font-family: sans-serif;
+            padding: 50px;
+            background: #f4f4f4;
+        }
 
-    @font-face {
-        font-family: 'KitabTest';
-        src: url('assets/fonts/kitab.ttf') format('truetype');
-    }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+        }
 
-    .test-row {
-        margin: 20px 0;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 10px;
-    }
+        .test-row {
+            margin: 20px 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
 
-    .label {
-        font-weight: bold;
-        width: 150px;
-        display: inline-block;
-    }
+        .label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: #666;
+        }
 
-    .sample {
-        font-size: 24px;
-        direction: rtl;
-    }
-</style>
+        .sample {
+            font-size: 36px;
+            background: #fafafa;
+            padding: 15px;
+            border: 1px dashed #ccc;
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .rtl {
+            direction: rtl;
+        }
+
+        .ltr {
+            direction: ltr;
+        }
+
+        .sw-sim {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 5px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Font Rendering Test</h1>
-    <h3>Target String: ِmْsِb (Latin 'm', 's', 'b' + Arabic Kasra, Sukun)</h3>
+    <div class="test-container">
+        <h1>Final RTL Alignment Debug</h1>
 
-    <div class="test-row">
-        <span class="label">Arial (System)</span>
-        <span class="sample" style="font-family: Arial, sans-serif;">ِmْsِb</span>
-    </div>
-    <div class="test-row">
-        <span class="label">Times New Roman</span>
-        <span class="sample" style="font-family: 'Times New Roman', serif;">ِmْsِb</span>
-    </div>
-    <div class="test-row">
-        <span class="label">AmiriQuran (APK)</span>
-        <span class="sample" style="font-family: 'AmiriQuran', serif;">ِmْsِb</span>
-    </div>
-    <div class="test-row">
-        <span class="label">Hafs (APK)</span>
-        <span class="sample" style="font-family: 'Hafs', serif;">ِmْsِb</span>
-    </div>
-    <div class="test-row">
-        <span class="label">Kitab (Current)</span>
-        <span class="sample" style="font-family: 'KitabTest', serif;">ِmْsِb</span>
-    </div>
-    <div class="test-row">
-        <span class="label">Noorehuda (Current)</span>
-        <span class="sample" style="font-family: 'noorehuda', serif;">ِmْsِb</span>
+        <div class="test-row">
+            <span class="label">1. RAW APK DATA (ِmْsِb) - Direction: LTR</span>
+            <div class="sample ltr" style="font-family: 'noorehuda';">ِmْsِb</div>
+        </div>
+
+        <div class="test-row">
+            <span class="label">2. RAW APK DATA (ِmْsِb) - Direction: RTL</span>
+            <div class="sample rtl" style="font-family: 'noorehuda';">ِmْsِb</div>
+        </div>
+
+        <div class="test-row">
+            <span class="label">3. UN-REVERSED (bِsْmِ) - Direction: RTL</span>
+            <div class="sample rtl" style="font-family: 'noorehuda';">bِsْmِ</div>
+        </div>
+
+        <div class="test-row">
+            <span class="label">4. UN-REVERSED (bِsْmِ) - Direction: LTR</span>
+            <div class="sample ltr" style="font-family: 'noorehuda';">bِsْmِ</div>
+        </div>
+
+        <hr>
+        <h2>Word Block Simulation (.sw wrapper)</h2>
+        <div style="direction: rtl; text-align: right;">
+            <div class="sw-sim">
+                <span class="sample ltr" style="font-family: 'noorehuda'; font-size: 24px;">ِmْsِb</span>
+                <span style="font-family: IndoPak; font-size: 24px;">بِسْمِ</span>
+                <span style="font-size: 14px;">dengan nama</span>
+            </div>
+            <div class="sw-sim">
+                <span class="sample ltr" style="font-family: 'noorehuda'; font-size: 24px;">ِhَّllٱ</span>
+                <span style="font-family: IndoPak; font-size: 24px;">اللَّهِ</span>
+                <span style="font-size: 14px;">Allah</span>
+            </div>
+        </div>
     </div>
 </body>
 

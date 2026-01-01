@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RTL Test</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=1767227388">
+    <style>
+        body { background-color: #f0f0f0; padding: 50px; }
+        .sw { background: #fff; border: 1px solid #ccc; padding: 5px; }
+        .wa { font-size: 30px; }
+    </style>
+</head>
+<body>
+    <h1>RTL Word Order Test</h1>
+    <p>We expect Word 1 (First in DOM) to appear on the RIGHT.</p>
+    <p>Sequence: Word 1 -> Word 2 -> Word 3</p>
+    <hr>
+    
+    <!-- Simulation of generated HTML from main.js -->
+    <div class='container'>
+        <div class='row full-surah'>
+            
+            <div class='col-11 s-a' id='1'>
+                <!-- The .a container with enforced RTL -->
+                <div class="a" dir="rtl">
+                    <div class='w a-n-a'><h3 class=a-n>1</h3></div>
+                    
+                    <!-- Word 1 -->
+                    <span class="sw">
+                        <span class="wl" style="display:none">Word 1</span>
+                        <span class="wa">الكلمة 1</span>
+                        <span class="wt">translit 1</span>
+                    </span>
+                    
+                    <!-- Word 2 -->
+                    <span class="sw">
+                        <span class="wl" style="display:none">Word 2</span>
+                        <span class="wa">الكلمة 2</span>
+                        <span class="wt">translit 2</span>
+                    </span>
+                    
+                    <!-- Word 3 -->
+                    <span class="sw">
+                        <span class="wl" style="display:none">Word 3</span>
+                        <span class="wa">الكلمة 3</span>
+                        <span class="wt">translit 3</span>
+                    </span>
+                    
+                </div>
+                
+                <div class='col-12 f-t'>
+                    <h3 class=a-n>1</h3> Translation of the verse (English, LTR).
+                </div>
+                
+                <!-- Ihya Tafsir Injection -->
+                <div class='ihya-container'>
+                    <h4>Ihya Commentary</h4>
+                    <p>This is the commentary text. It should be LTR.</p>
+                </div>
+                
+                <hr>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>

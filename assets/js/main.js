@@ -121,7 +121,7 @@ function loadAyahs(a, c, e, clear_content = false) {
                 }
             }
 
-            var m = "<div class='col-11 s-a " + a + "' id=" + d + "><div class=a><div class='w a-n-a'><h3 class=a-n>" + d + "</h3></div>", l = ""; for (f = 0; f <= k - 1; f++) {
+            var m = "<div class='col-11 s-a " + a + "' id=" + d + "><div class=a dir='rtl'><div class='w a-n-a'><h3 class=a-n>" + d + "</h3></div>", l = ""; for (f = 0; f <= k - 1; f++) {
                 try {
                     var n = b[d].w[f].b, p = b[d].w[f].h, word_arabic = b[d].w[f].c, word_transliteration = b[d].w[f].d, word_translation = b[d].w[f].e;
                     l += "<span class=sw data-ts-mishary=" + n + " data-ts-husary=" + p + "><span class=wl>" +
@@ -157,7 +157,7 @@ function loadAyahs(a, c, e, clear_content = false) {
 function loadDuas(a, c, e) {
     $.getJSON("data/" + a + ".json", function (b) {
         var d, f, g = Object.keys(b).length; for (d = c; d <= e; d++) {
-            var k = b[d].w.length, h = b[d].a.g, m = "<div class='col-11 s-a " + a + "' id=" + d + " style='flex: 0 0 97.5%; max-width: 97.5%;'><div style='text-align: center; padding-bottom: 20px;'><a class='surah-name-duas' target='_blank' href='#" + d + "'>Surah " + surah_names[a] + ", Ayah " + d + "</a></div><div class=a><span></span>", l = ""; for (f = 0; f <= k - 1; f++) {
+            var k = b[d].w.length, h = b[d].a.g, m = "<div class='col-11 s-a " + a + "' id=" + d + " style='flex: 0 0 97.5%; max-width: 97.5%;'><div style='text-align: center; padding-bottom: 20px;'><a class='surah-name-duas' target='_blank' href='#" + d + "'>Surah " + surah_names[a] + ", Ayah " + d + "</a></div><div class=a dir='rtl'><span></span>", l = ""; for (f = 0; f <= k - 1; f++) {
                 var n = b[d].w[f].b; word_arabic = b[d].w[f].c; word_transliteration =
                     b[d].w[f].d; word_translation = b[d].w[f].e; l += "<span class=sw data-ts=" + n + "><span class=wl>" + word_transliteration + "</span><span class=wa>" + word_arabic + "</span><span class=wt>" + word_translation + "</span></span>"
             } console.log(m + l + (d == g ? "</div><div class='col-12 f-t'>" + h + "</div><br></div>" : "</div><div class='col-12 f-t'>" + h + "</div><hr></div>"))

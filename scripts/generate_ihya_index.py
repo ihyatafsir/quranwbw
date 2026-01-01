@@ -1,91 +1,110 @@
 import json
 import os
-import re
-
-# Paths
-WWW_PATH = '/home/absolut7/Documents/ihyatafsirwebsite_2/quranwbw'
-MASTER_DATA_PATH = '/home/absolut7/Documents/ihya_love/ihya_tafsir_master.json'
-BOOK_METADATA_PATH = '/home/absolut7/Documents/ihya_love/book_metadata.json'
-INDEX_HTML_PATH = os.path.join(WWW_PATH, 'index.html')
-OUTPUT_PATH = os.path.join(WWW_PATH, 'assets/data/ihya_index.json')
-
-def get_surah_mapping():
-    mapping = {}
-    with open(INDEX_HTML_PATH, 'r') as f:
-        content = f.read()
-    
-    # regex to find <span class="index-surah-no">NO</span>...<span class="index-surahname-ar">NAME</span>
-    # Note: index.html is minified or very dense, so we search globally
-    matches = re.finditer(r'<span class="index-surah-no">(\d+)</span>.*?<span class="index-surahname-ar">(.*?)</span>', content)
-    for m in matches:
-        no = int(m.group(1))
-        name = m.group(2).strip()
-        mapping[name] = no
-    return mapping
 
 def generate_index():
-    # Load data
-    with open(MASTER_DATA_PATH, 'r') as f:
+    # Load Master JSON
+    with open('/home/absolut7/Documents/ihya_love/ihya_tafsir_master.json', 'r', encoding='utf-8') as f:
         master_data = json.load(f)
-    
-    with open(BOOK_METADATA_PATH, 'r') as f:
-        book_metadata = json.load(f)
 
-    surah_map = get_surah_mapping()
-    index = []
-    
-    for entry in master_data:
-        # Some entries might have empty commentary
-        if not entry.get('english_commentary') or entry['english_commentary'].strip() == "":
-            continue
+    # Sort key: Surah then Ayah
+    # Note: verse_key is "73:7". We need to parse.
+    # Sort key: Surah then Ayah
+    def sort_key(item):
+        v_key = item.get('verse_key', '0:0')
+        s_id = item.get('surah', '0')
+        a_id = item.get('ayah', '0')
+        
+        # Try to parse numeric surah
+        try:
+            s_num = int(s_id)
+        except ValueError:
+            s_num = 0
+        
+        # Try to parse numeric ayah
+        try:
+            if isinstance(a_id, str) and '-' in a_id:
+                a_id = a_id.split('-')[0]
+            a_num = int(a_id)
+        except ValueError:
+            a_num = 0
             
-        book_key = entry.get('book_source')
-        book_name = "Tafsir Al-Ihya"
-        if book_key in book_metadata:
-            book_name = book_metadata[book_key].get('english_title', book_name)
+        return (s_num, a_num)
+
+    sorted_data = sorted(master_data, key=sort_key)
+
+    # Generate HTML
+    html_content = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ihya Tafsir Index - QuranWBW</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .index-container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+        .verse-row { border-bottom: 1px solid #eee; padding: 15px 0; }
+        .verse-key { font-weight: bold; color: #d4af37; }
+        .book-source { color: #666; font-size: 0.9em; }
+        .commentary-preview { color: #444; margin-top: 5px; font-size: 0.95em; }
+        .nav-link { color: #333; }
+        .back-link { margin-bottom: 20px; display: inline-block; }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="container index-container">
+        <a href="index.html" class="back-link">&larr; Back to Home</a>
+        <h1>Ihya Tafsir Index</h1>
+        <p class="lead">Chronological list of Quranic verses mentioned in the Ihya 'Ulum al-Din.</p>
         
-        surah_val = entry['surah']
-        if isinstance(surah_val, str) and not surah_val.isdigit():
-            surah_num = surah_map.get(surah_val)
-            if not surah_num:
-                print(f"Warning: Could not map surah name '{surah_val}' for verse {entry['verse_key']}")
-                continue
-        else:
-            surah_num = int(surah_val)
-
-        ayah_val = entry['ayah']
-        
-        index.append({
-            "verse_key": entry['verse_key'],
-            "surah": surah_num,
-            "ayah": ayah_val,
-            "book": book_name,
-            "arabic": entry.get('arabic_commentary', ""),
-            "english": entry.get('english_commentary', "")
-        })
-
-    # Sort by surah and ayah (numerically)
-    def sort_key(x):
-        surah = x['surah']
-        ayah_str = str(x['ayah'])
-        if '-' in ayah_str:
-            ayah = int(ayah_str.split('-')[0])
-        else:
-            try:
-                ayah = int(ayah_str)
-            except ValueError:
-                ayah = 0 # Fallback
-        return (surah, ayah)
-
-    index.sort(key=sort_key)
-
-    # Ensure output directory exists
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-
-    with open(OUTPUT_PATH, 'w') as f:
-        json.dump(index, f, indent=2)
+        <div class="list-group">
+"""
     
-    print(f"Index generated with {len(index)} entries at {OUTPUT_PATH}")
+    for item in sorted_data:
+        key = item.get('verse_key')
+        
+        surah_id = item.get('surah')
+        ayah_id = item.get('ayah')
+        # Clean ayah range if exists
+        ayah_start = ayah_id.split('-')[0] if '-' in ayah_id else ayah_id
+        
+        book_src = item.get('book_source', 'Unknown Book')
+        eng_comm = item.get('english_commentary') or ''
+        # Truncate commentary
+        preview = (eng_comm[:200] + '...') if len(eng_comm) > 200 else eng_comm
+        
+        # Format Book Name (simple parse)
+        # "Vol1-book-10.doc" -> "Vol 1, Book 10"
+        vol = item.get('vol', '?')
+        # Handle book_src being None
+        if not book_src: book_src = "Unknown"
+        book_clean = book_src.replace('.doc', '').replace('-', ' ')
+        
+        link = f"surahs/{surah_id}.html#{ayah_start}"
+        
+        html_content += f"""
+        <div class="list-group-item verse-row">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1 verse-key">Verse {key}</h5>
+                <small class="book-source">{book_clean}</small>
+            </div>
+            <p class="mb-1 commentary-preview">{preview}</p>
+            <a href="{link}" class="btn btn-sm btn-outline-warning mt-2">Go to Verse</a>
+        </div>
+"""
+
+    html_content += """
+        </div>
+    </div>
+</body>
+</html>
+"""
+
+    with open('/home/absolut7/Documents/ihyatafsirwebsite_2/quranwbw/ihya-index.html', 'w', encoding='utf-8') as f:
+        f.write(html_content)
+    
+    print("Generated ihya-index.html with", len(sorted_data), "entries.")
 
 if __name__ == "__main__":
     generate_index()

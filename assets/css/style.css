@@ -397,7 +397,9 @@ a.surah-selector-link:hover {
 .ayah {
     display: inline-block;
     width: 100%;
-    padding: 10px 0 10px 0
+    padding: 10px 0 10px 0;
+    direction: rtl;
+    text-align: center;
 }
 
 .a:hover,
@@ -483,13 +485,7 @@ w-a:hover {
 .TRL,
 .wl,
 w-l {
-    font-size: 24px;
-    font-family: 'Inter', 'Roboto', 'Arial', sans-serif;
-    color: #444;
-    direction: ltr;
-    text-align: center;
-    padding-bottom: 5px;
-    display: block;
+    display: none;
     width: 100%;
 }
 
@@ -943,4 +939,14 @@ a.surah-name-duas:hover {
         height: 24px;
         background-size: 20px;
     }
+}
+/* Ihya Tafsir Styling */
+.ihya-container {
+    direction: ltr;
+    text-align: left;
+}
+
+.ihya-text {
+    direction: ltr;
+    text-align: left;
 }
