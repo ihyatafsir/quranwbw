@@ -45,6 +45,25 @@ def find_book_file(book_source_raw):
             return fname
     return None
 
+def find_metadata(book_src_raw, book_meta):
+    """
+    Find metadata entry locally.
+    book_src_raw might be 'Vol1-book-10.doc'
+    book_meta key might be 'vol1_Vol1-book-10.doc'
+    """
+    if book_src_raw in book_meta:
+        return book_meta[book_src_raw]
+    
+    # Try fuzzy match
+    # keys in meta are filenames.
+    for k, v in book_meta.items():
+        if k.endswith(book_src_raw):
+            return v
+        if book_src_raw in k:
+            return v
+            
+    return None
+
 def inject_tafsir():
     master_path = '/home/absolut7/Documents/ihya_love/ihya_tafsir_master.json'
     print(f"Loading {master_path}...")
@@ -73,7 +92,6 @@ def inject_tafsir():
         
         # Priority to Verse Key parsing if it's "Arabic: Num"
         if not s_id.isdigit():
-             # Try parse from verse_key
              if ':' in verse_key:
                  parts = verse_key.split(':')
                  s_part = parts[0].strip()
@@ -86,12 +104,10 @@ def inject_tafsir():
                      s_id = s_part
                      a_id = a_part
         
-        # If still not digit, try looking up s_id directly
         if not s_id.isdigit() and s_id in ARABIC_SURAH_MAP:
             s_id = str(ARABIC_SURAH_MAP[s_id])
             
         if not s_id.isdigit():
-            # print(f"Skipping invalid key: {verse_key} (s={s_id})")
             skipped_count += 1
             continue
             
@@ -131,8 +147,20 @@ def inject_tafsir():
             target_key = (surah_num, ayah_num)
             
             if target_key in verse_map:
-                commentaries = verse_map[target_key]
+                raw_commentaries = verse_map[target_key]
                 
+                # DEDUPLICATION
+                commentaries = []
+                seen_texts = set()
+                for c in raw_commentaries:
+                    txt = (c.get('english_commentary') or '').strip()
+                    if txt and txt not in seen_texts:
+                        seen_texts.add(txt)
+                        commentaries.append(c)
+                
+                if not commentaries:
+                    continue
+
                 # Build HTML
                 html_parts = []
                 html_parts.append("<div class='ihya-container' style='margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-left: 4px solid #d4af37; border-radius: 4px;'>")
@@ -140,12 +168,14 @@ def inject_tafsir():
                 
                 for idx, comm in enumerate(commentaries):
                     book_src_raw = comm.get('book_source', 'Unknown Book')
+                    if book_src_raw:
+                        book_src_raw = book_src_raw.strip()
                     
-                    # Display Name from Metadata
-                    if book_src_raw in book_meta:
-                        book_info = book_meta[book_src_raw]
+                    # Display Name from Metadata using FUZZY lookup
+                    book_info = find_metadata(book_src_raw, book_meta)
+                    
+                    if book_info:
                         book_src_display = book_info.get('english_title', book_src_raw)
-                        # Optional: Add Volume? "Vol 1: Book of Knowledge"
                         vol = book_info.get('vol', '')
                         if vol:
                             book_src_display = f"Vol {vol}: {book_src_display}"
@@ -179,7 +209,7 @@ def inject_tafsir():
                         html_parts.append(f"<div class='ihya-text' style='font-size: 1.1em; line-height: 1.6; color: #333; margin-bottom: 10px;'>{english_text}</div>")
                     
                     # Arabic Text
-                    if arabic_text:
+                    if arabic_text and "SKIPPED" not in arabic_text:
                         html_parts.append(f"<div class='ihya-arabic' style='font-size: 1.2em; line-height: 1.8; color: #555; text-align: right; direction: rtl; font-family: \"Traditional Arabic\", serif; background: #fff; padding: 10px; border-radius: 4px; border: 1px solid #eee;'>{arabic_text}</div>")
 
                     html_parts.append("</div>")
