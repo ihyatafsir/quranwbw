@@ -65,7 +65,7 @@ def find_metadata(book_src_raw, book_meta):
     return None
 
 def inject_tafsir():
-    master_path = '/home/absolut7/Documents/ihya_love/ihya_tafsir_master_v3.json'
+    master_path = '/home/absolut7/Documents/ihya_love/ihya_tafsir_master.json'
     print(f"Loading {master_path}...")
     with open(master_path, 'r', encoding='utf-8') as f:
         master_data = json.load(f)

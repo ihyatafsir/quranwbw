@@ -19,7 +19,7 @@ ARABIC_SURAH_MAP = {
 
 def generate_index():
     # Load Master JSON
-    with open('/home/absolut7/Documents/ihya_love/ihya_tafsir_master_v3.json', 'r', encoding='utf-8') as f:
+    with open('/home/absolut7/Documents/ihya_love/ihya_tafsir_master.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
 
     # Load Book Metadata
