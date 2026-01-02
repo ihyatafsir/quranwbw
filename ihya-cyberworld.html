@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IHYA DIGITAL UNIVERSE</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Orbitron:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --neon-gold: #d4af37;
+            --cyber-dark: #050505;
+            --glass-bg: rgba(15, 15, 15, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-space: border-box;
+        }
+
+        body {
+            background-color: var(--cyber-dark);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        }
+
+        .header {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 12px;
+            color: var(--neon-gold);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            text-transform: uppercase;
+        }
+
+        #universe {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+            height: 100vh;
+            padding: 120px 50px;
+            perspective: 1000px;
+        }
+
+        .book-node {
+            width: 100px;
+            height: 100px;
+            margin: 15px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            animation: float 4s infinite ease-in-out;
+        }
+
+        .book-node:hover {
+            transform: scale(1.3) translateZ(50px);
+            border-color: var(--neon-gold);
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 80%);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .book-node span {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-gold);
+            pointer-events: none;
+        }
+
+        .node-label {
+            position: absolute;
+            bottom: -25px;
+            width: 150px;
+            text-align: center;
+            font-size: 0.65rem;
+            color: #aaa;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .book-node:hover .node-label {
+            opacity: 1;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Modal / Scanner Experience */
+        #scanner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cyber-dark);
+            z-index: 100;
+            display: none;
+            flex-direction: column;
+            padding: 40px;
+        }
+
+        .scanner-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--neon-gold);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .scanner-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: var(--neon-gold);
+        }
+
+        .close-btn {
+            background: transparent;
+            border: 1px solid var(--neon-gold);
+            color: var(--neon-gold);
+            padding: 8px 20px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            background: var(--neon-gold);
+            color: #000;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .column {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            overflow-y: auto;
+            border-radius: 8px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .column.arabic {
+            direction: rtl;
+            font-family: 'Traditional Arabic', serif;
+            font-size: 1.4rem;
+        }
+
+        .column::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .column::-webkit-scrollbar-thumb {
+            background: var(--neon-gold);
+        }
+
+        .progress-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="starfield"></canvas>
+
+    <div class="header">
+        <h1>Digital Ihya Universe</h1>
+        <p style="color: #666; font-size: 0.8rem; letter-spacing: 4px; margin-top: 10px;">GHAZALIAN DATA-MAPPING CORE
+            V1.0</p>
+    </div>
+
+    <div id="universe">
+        <!-- Nodes injected here -->
+    </div>
+
+    <div id="scanner">
+        <div class="scanner-header">
+            <div>
+                <small style="color: #666; letter-spacing: 2px;">SYNCHRONIZING MANUSCRIPT...</small>
+                <div id="book-title-en" class="scanner-title"></div>
+                <div id="book-title-ar" style="font-size: 1.2rem; opacity: 0.7;"></div>
+            </div>
+            <button class="close-btn" onclick="closeScanner()">CLOSE TERMINAL</button>
+        </div>
+        <div class="content-grid">
+            <div id="en-content" class="column english"></div>
+            <div id="ar-content" class="column arabic"></div>
+        </div>
+    </div>
+
+    <script>
+        const ar = document.getElementById('starfield');
+        const ctx = ar.getContext('2d');
+        let stars = [];
+
+        function initStars() {
+            ar.width = window.innerWidth;
+            ar.height = window.innerHeight;
+            for (let i = 0; i < 200; i++) {
+                stars.push({
+                    x: Math.random() * ar.width,
+                    y: Math.random() * ar.height,
+                    size: Math.random() * 2,
+                    speed: Math.random() * 0.5
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, ar.width, ar.height);
+            ctx.fillStyle = '#fff';
+            stars.forEach(s => {
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                ctx.fill();
+                s.y -= s.speed;
+                if (s.y < 0) s.y = ar.height;
+            });
+            requestAnimationFrame(drawStars);
+        }
+
+        async function loadCatalog() {
+            const resp = await fetch('cyber/data/catalog.json');
+            const data = await resp.json();
+            const universe = document.getElementById('universe');
+
+            data.forEach((book, idx) => {
+                const node = document.createElement('div');
+                node.className = 'book-node';
+                node.style.animationDelay = `${idx * 0.1}s`;
+                node.innerHTML = `
+                    <span>${book.id}</span>
+                    <div class="node-label">${book.title_en}</div>
+                `;
+                node.onclick = () => openScanner(book);
+                universe.appendChild(node);
+            });
+        }
+
+        async function openScanner(book) {
+            document.getElementById('book-title-en').innerText = book.title_en;
+            document.getElementById('book-title-ar').innerText = book.title_ar;
+            document.getElementById('en-content').innerText = "SCANNING EN MANUSCRIPT...";
+            document.getElementById('ar-content').innerText = "...جاري مسح المخطوطة العربية";
+            document.getElementById('scanner').style.display = 'flex';
+
+            const [arResp, enResp] = await Promise.all([
+                fetch(book.ar_url),
+                fetch(book.en_url)
+            ]);
+
+            const arText = await arResp.text();
+            const enText = await enResp.text();
+
+            document.getElementById('ar-content').innerText = arText;
+            document.getElementById('en-content').innerText = enText;
+        }
+
+        function closeScanner() {
+            document.getElementById('scanner').style.display = 'none';
+        }
+
+        initStars();
+        drawStars();
+        loadCatalog();
+    </script>
+</body>
+
+</html>

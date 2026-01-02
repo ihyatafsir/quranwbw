@@ -1,0 +1,314 @@
+[
+  {
+    "id": "1",
+    "title_ar": "كتاب العلم",
+    "title_en": "Book of Knowledge",
+    "vol": 1,
+    "ar_url": "cyber/books_ar/book_1_ar.txt",
+    "en_url": "cyber/books_en/book_1_en.txt"
+  },
+  {
+    "id": "2",
+    "title_ar": "كتاب إحياء علوم الدين",
+    "title_en": "Foundations of Belief",
+    "vol": 1,
+    "ar_url": "cyber/books_ar/book_2_ar.txt",
+    "en_url": "cyber/books_en/book_2_en.txt"
+  },
+  {
+    "id": "3",
+    "title_ar": "كتاب أسرار الطهارة",
+    "title_en": "Mysteries of Purity",
+    "vol": 1,
+    "ar_url": "cyber/books_ar/book_3_ar.txt",
+    "en_url": "cyber/books_en/book_3_en.txt"
+  },
+  {
+    "id": "4",
+    "title_ar": "كتاب أسرار الصلاة ومهماتها",
+    "title_en": "Secrets of Prayer",
+    "vol": 1,
+    "ar_url": "cyber/books_ar/book_4_ar.txt",
+    "en_url": "cyber/books_en/book_4_en.txt"
+  },
+  {
+    "id": "5",
+    "title_ar": "كتاب أسرار الزكاة",
+    "title_en": "Secrets of Zakat",
+    "vol": 1,
+    "ar_url": "cyber/books_ar/book_5_ar.txt",
+    "en_url": "cyber/books_en/book_5_en.txt"
+  },
+  {
+    "id": "6",
+    "title_ar": "كتاب أسرار الصوم",
+    "title_en": "Secrets of Fasting",
+    "vol": 1,
+    "ar_url": "cyber/books_ar/book_6_ar.txt",
+    "en_url": "cyber/books_en/book_6_en.txt"
+  },
+  {
+    "id": "7",
+    "title_ar": "كتاب أسرار الحج",
+    "title_en": "Secrets of Hajj",
+    "vol": 1,
+    "ar_url": "cyber/books_ar/book_7_ar.txt",
+    "en_url": "cyber/books_en/book_7_en.txt"
+  },
+  {
+    "id": "8",
+    "title_ar": "كتاب آداب تلاوة القرآن",
+    "title_en": "Etiquette of Quran Recitation",
+    "vol": 1,
+    "ar_url": "cyber/books_ar/book_8_ar.txt",
+    "en_url": "cyber/books_en/book_8_en.txt"
+  },
+  {
+    "id": "9",
+    "title_ar": "كتاب الأذكار والدعوات",
+    "title_en": "Invocations and Supplications",
+    "vol": 1,
+    "ar_url": "cyber/books_ar/book_9_ar.txt",
+    "en_url": "cyber/books_en/book_9_en.txt"
+  },
+  {
+    "id": "10",
+    "title_ar": "كتاب ترتيب الأوراد وتفصيل إحياء الليل",
+    "title_en": "Arrangement of Litanies",
+    "vol": 1,
+    "ar_url": "cyber/books_ar/book_10_ar.txt",
+    "en_url": "cyber/books_en/book_10_en.txt"
+  },
+  {
+    "id": "11",
+    "title_ar": "كتاب آداب الأكل",
+    "title_en": "Etiquette of Eating",
+    "vol": 2,
+    "ar_url": "cyber/books_ar/book_11_ar.txt",
+    "en_url": "cyber/books_en/book_11_en.txt"
+  },
+  {
+    "id": "12",
+    "title_ar": "كتاب آداب النكاح",
+    "title_en": "Etiquette of Marriage",
+    "vol": 2,
+    "ar_url": "cyber/books_ar/book_12_ar.txt",
+    "en_url": "cyber/books_en/book_12_en.txt"
+  },
+  {
+    "id": "13",
+    "title_ar": "كتاب آداب الكسب والمعاش",
+    "title_en": "Etiquette of Earning a Livelihood",
+    "vol": 2,
+    "ar_url": "cyber/books_ar/book_13_ar.txt",
+    "en_url": "cyber/books_en/book_13_en.txt"
+  },
+  {
+    "id": "14",
+    "title_ar": "كتاب الحلال والحرام",
+    "title_en": "The Lawful and Prohibited",
+    "vol": 2,
+    "ar_url": "cyber/books_ar/book_14_ar.txt",
+    "en_url": "cyber/books_en/book_14_en.txt"
+  },
+  {
+    "id": "15",
+    "title_ar": "كتاب أداب الألفة والأخوة والصحبة والمعاشرة مع أصناف الخلق",
+    "title_en": "Etiquette of Companionship",
+    "vol": 2,
+    "ar_url": "cyber/books_ar/book_15_ar.txt",
+    "en_url": "cyber/books_en/book_15_en.txt"
+  },
+  {
+    "id": "16",
+    "title_ar": "كتاب آداب العزلة",
+    "title_en": "Etiquette of Seclusion",
+    "vol": 2,
+    "ar_url": "cyber/books_ar/book_16_ar.txt",
+    "en_url": "cyber/books_en/book_16_en.txt"
+  },
+  {
+    "id": "17",
+    "title_ar": "كتاب آداب السفر",
+    "title_en": "Etiquette of Travel",
+    "vol": 2,
+    "ar_url": "cyber/books_ar/book_17_ar.txt",
+    "en_url": "cyber/books_en/book_17_en.txt"
+  },
+  {
+    "id": "18",
+    "title_ar": "كتاب آداب السماع والوجد",
+    "title_en": "Etiquette of Sama and Wajd",
+    "vol": 2,
+    "ar_url": "cyber/books_ar/book_18_ar.txt",
+    "en_url": "cyber/books_en/book_18_en.txt"
+  },
+  {
+    "id": "19",
+    "title_ar": "كتاب الأمر بالمعروف والنهي عن المنكر",
+    "title_en": "Enjoining Good and Forbidding Evil",
+    "vol": 2,
+    "ar_url": "cyber/books_ar/book_19_ar.txt",
+    "en_url": "cyber/books_en/book_19_en.txt"
+  },
+  {
+    "id": "20",
+    "title_ar": "كتاب آداب المعيشة وأخلاق النبوة",
+    "title_en": "Prophetic Mannerisms",
+    "vol": 2,
+    "ar_url": "cyber/books_ar/book_20_ar.txt",
+    "en_url": "cyber/books_en/book_20_en.txt"
+  },
+  {
+    "id": "21",
+    "title_ar": "كتاب شرح عجائب القلب",
+    "title_en": "Wonders of the Heart",
+    "vol": 3,
+    "ar_url": "cyber/books_ar/book_21_ar.txt",
+    "en_url": "cyber/books_en/book_21_en.txt"
+  },
+  {
+    "id": "22",
+    "title_ar": "كتاب رياضة النفس وتهذيب الأخلاق",
+    "title_en": "Disciplining the Soul",
+    "vol": 3,
+    "ar_url": "cyber/books_ar/book_22_ar.txt",
+    "en_url": "cyber/books_en/book_22_en.txt"
+  },
+  {
+    "id": "23",
+    "title_ar": "كتاب كسر الشهوتين",
+    "title_en": "Breaking the Two Desires",
+    "vol": 3,
+    "ar_url": "cyber/books_ar/book_23_ar.txt",
+    "en_url": "cyber/books_en/book_23_en.txt"
+  },
+  {
+    "id": "24",
+    "title_ar": "كتاب آفات اللسان",
+    "title_en": "Harms of the Tongue",
+    "vol": 3,
+    "ar_url": "cyber/books_ar/book_24_ar.txt",
+    "en_url": "cyber/books_en/book_24_en.txt"
+  },
+  {
+    "id": "25",
+    "title_ar": "كتاب ذم الغضب والحقد والحسد",
+    "title_en": "Condemnation of Anger and Envy",
+    "vol": 3,
+    "ar_url": "cyber/books_ar/book_25_ar.txt",
+    "en_url": "cyber/books_en/book_25_en.txt"
+  },
+  {
+    "id": "26",
+    "title_ar": "كتاب ذم الدنيا",
+    "title_en": "Condemnation of the World",
+    "vol": 3,
+    "ar_url": "cyber/books_ar/book_26_ar.txt",
+    "en_url": "cyber/books_en/book_26_en.txt"
+  },
+  {
+    "id": "27",
+    "title_ar": "كتاب ذم البخل وذم حب المال",
+    "title_en": "Condemnation of Miserliness",
+    "vol": 3,
+    "ar_url": "cyber/books_ar/book_27_ar.txt",
+    "en_url": "cyber/books_en/book_27_en.txt"
+  },
+  {
+    "id": "28",
+    "title_ar": "كتاب ذم الجاه والرياء",
+    "title_en": "Condemnation of Status and Ostentation",
+    "vol": 3,
+    "ar_url": "cyber/books_ar/book_28_ar.txt",
+    "en_url": "cyber/books_en/book_28_en.txt"
+  },
+  {
+    "id": "29",
+    "title_ar": "كتاب ذم الكبر والعجب",
+    "title_en": "Condemnation of Pride and Conceit",
+    "vol": 3,
+    "ar_url": "cyber/books_ar/book_29_ar.txt",
+    "en_url": "cyber/books_en/book_29_en.txt"
+  },
+  {
+    "id": "30",
+    "title_ar": "كتاب ذم الغرور",
+    "title_en": "Condemnation of Self-Delusion",
+    "vol": 3,
+    "ar_url": "cyber/books_ar/book_30_ar.txt",
+    "en_url": "cyber/books_en/book_30_en.txt"
+  },
+  {
+    "id": "32",
+    "title_ar": "كتاب الصبر والشكر",
+    "title_en": "Patience and Gratitude",
+    "vol": 4,
+    "ar_url": "cyber/books_ar/book_32_ar.txt",
+    "en_url": "cyber/books_en/book_32_en.txt"
+  },
+  {
+    "id": "33",
+    "title_ar": "كتاب الخوف والرجاء",
+    "title_en": "Fear and Hope",
+    "vol": 4,
+    "ar_url": "cyber/books_ar/book_33_ar.txt",
+    "en_url": "cyber/books_en/book_33_en.txt"
+  },
+  {
+    "id": "34",
+    "title_ar": "كتاب الفقر والزهد",
+    "title_en": "Poverty and Abstinence",
+    "vol": 4,
+    "ar_url": "cyber/books_ar/book_34_ar.txt",
+    "en_url": "cyber/books_en/book_34_en.txt"
+  },
+  {
+    "id": "35",
+    "title_ar": "كتاب التوحيد والتوكل",
+    "title_en": "Tawhid and Trust",
+    "vol": 4,
+    "ar_url": "cyber/books_ar/book_35_ar.txt",
+    "en_url": "cyber/books_en/book_35_en.txt"
+  },
+  {
+    "id": "36",
+    "title_ar": "كتاب المحبة والشوق والأنس والرضا",
+    "title_en": "Love, Longing, and Intimacy",
+    "vol": 4,
+    "ar_url": "cyber/books_ar/book_36_ar.txt",
+    "en_url": "cyber/books_en/book_36_en.txt"
+  },
+  {
+    "id": "37",
+    "title_ar": "كتاب النية والإخلاص والصدق",
+    "title_en": "Intention, Sincerity, and Truthfulness",
+    "vol": 4,
+    "ar_url": "cyber/books_ar/book_37_ar.txt",
+    "en_url": "cyber/books_en/book_37_en.txt"
+  },
+  {
+    "id": "38",
+    "title_ar": "كتاب المراقبة والمحاسبة",
+    "title_en": "Watchfulness and Self-Examination",
+    "vol": 4,
+    "ar_url": "cyber/books_ar/book_38_ar.txt",
+    "en_url": "cyber/books_en/book_38_en.txt"
+  },
+  {
+    "id": "39",
+    "title_ar": "كتاب التفكر",
+    "title_en": "Meditation",
+    "vol": 4,
+    "ar_url": "cyber/books_ar/book_39_ar.txt",
+    "en_url": "cyber/books_en/book_39_en.txt"
+  },
+  {
+    "id": "40",
+    "title_ar": "كتاب ذكر الموت وما بعده",
+    "title_en": "Remembrance of Death and the Afterlife",
+    "vol": 4,
+    "ar_url": "cyber/books_ar/book_40_ar.txt",
+    "en_url": "cyber/books_en/book_40_en.txt"
+  }
+]
