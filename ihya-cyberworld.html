@@ -40,6 +40,29 @@
             background: radial-gradient(circle at center, #111 0%, #000 100%);
         }
 
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 1000;
+            color: var(--neon-gold);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            padding: 10px 20px;
+            border: 1px solid var(--neon-gold);
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: var(--neon-gold);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-gold);
+        }
+
         .header {
             position: absolute;
             top: 40px;
@@ -220,6 +243,7 @@
 </head>
 
 <body>
+    <a href="index.html" class="back-btn">&larr; MAIN SITE</a>
     <canvas id="starfield"></canvas>
 
     <div class="header">
@@ -281,11 +305,13 @@
         async function loadCatalog() {
             const resp = await fetch('cyber/data/catalog.json');
             const data = await resp.json();
+            window.catalog = data;
             const universe = document.getElementById('universe');
 
             data.forEach((book, idx) => {
                 const node = document.createElement('div');
                 node.className = 'book-node';
+                node.id = `book-${book.id}`;
                 node.style.animationDelay = `${idx * 0.1}s`;
                 node.innerHTML = `
                     <span>${book.id}</span>
@@ -294,9 +320,21 @@
                 node.onclick = () => openScanner(book);
                 universe.appendChild(node);
             });
+
+            // Check for deep links
+            const params = new URLSearchParams(window.location.search);
+            const bookId = params.get('book');
+            const verse = params.get('verse');
+
+            if (bookId) {
+                const book = data.find(b => b.id === bookId);
+                if (book) {
+                    setTimeout(() => openScanner(book, verse), 500);
+                }
+            }
         }
 
-        async function openScanner(book) {
+        async function openScanner(book, highlightVerse = null) {
             document.getElementById('book-title-en').innerText = book.title_en;
             document.getElementById('book-title-ar').innerText = book.title_ar;
             document.getElementById('en-content').innerText = "SCANNING EN MANUSCRIPT...";
@@ -308,11 +346,32 @@
                 fetch(book.en_url)
             ]);
 
-            const arText = await arResp.text();
-            const enText = await enResp.text();
+            let arText = await arResp.text();
+            let enText = await enResp.text();
 
-            document.getElementById('ar-content').innerText = arText;
-            document.getElementById('en-content').innerText = enText;
+            if (highlightVerse) {
+                // Highlighting logic - more robust regex for various formats like (2:45) or [2:45] or 2:45
+                const pattern = highlightVerse.replace(/:/g, '[:：]');
+                const regex = new RegExp(`(^|\\s|\\[|\\()(${pattern})(?=$|\\s|\\]|\\)|[,.])`, 'g');
+
+                // Wrap in span with ID for scrolling
+                enText = enText.replace(regex, `$1<span id="highlight-target" class="highlight" style="background: rgba(212,175,55,0.4); box-shadow: 0 0 15px var(--neon-gold); padding: 2px 5px; border-radius: 4px;">$2</span>`);
+
+                // For arabic, we try to match the verse key if present, otherwise no highlight on Arabic side
+                arText = arText.replace(regex, `$1<span id="highlight-target-ar" class="highlight" style="background: rgba(212,175,55,0.4); box-shadow: 0 0 15px var(--neon-gold); padding: 2px 5px; border-radius: 4px;">$2</span>`);
+            }
+
+            document.getElementById('ar-content').innerHTML = arText;
+            document.getElementById('en-content').innerHTML = enText;
+
+            if (highlightVerse) {
+                const target = document.getElementById('highlight-target') || document.getElementById('highlight-target-ar');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    target.style.background = 'rgba(212, 175, 55, 0.4)';
+                    target.style.boxShadow = '0 0 15px var(--neon-gold)';
+                }
+            }
         }
 
         function closeScanner() {

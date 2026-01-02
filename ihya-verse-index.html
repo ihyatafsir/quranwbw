@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chronological Quranic Index - Ihya Cyberworld</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Amiri:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #0a0a0c;
+            --glass: rgba(255, 255, 255, 0.05);
+            --neon-gold: #ffcc33;
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            padding: 60px 20px;
+            background: linear-gradient(to bottom, #1a1a1e, var(--dark-bg));
+            text-align: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 3rem;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        #verseSearch {
+            background: var(--glass);
+            border: 1px solid var(--gold);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            width: 100%;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        #verseSearch:focus {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .surah-group {
+            margin-bottom: 40px;
+        }
+
+        .surah-header {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .verse-card {
+            background: var(--glass);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.2s, border-color 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .verse-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .verse-meta {
+            font-size: 0.9rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .quran-plain {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 15px;
+            font-style: italic;
+            border-left: 3px solid var(--gold);
+            padding-left: 15px;
+            line-height: 1.6;
+        }
+
+        .arabic-preview {
+            font-family: 'Amiri', serif;
+            font-size: 1.2rem;
+            direction: rtl;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .english-preview {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #ccc;
+            font-style: italic;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 700;
+            z-index: 1000;
+            background: var(--glass);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid var(--gold);
+        }
+
+        .back-btn:hover {
+            background: var(--gold);
+            color: black;
+        }
+
+        .mention-count {
+            background: var(--gold);
+            color: black;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="index.html" class="back-btn">&larr; Main Site</a>
+
+    <div class="hero-section">
+        <h1>Quranic Verse Index</h1>
+        <p class="lead">Chronological mapping of every Quranic mention in the Ihya corpus</p>
+
+        <div class="search-container">
+            <input type="text" id="verseSearch" placeholder="Search by Surah name or Verse (e.g. 2:255)...">
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div id="indexContainer">
+            <!-- Dynamic Content -->
+        </div>
+    </div>
+
+    <script>
+        const surahNames = [
+            "", "Al-Fatihah", "Al-Baqarah", "Al-Imran", "An-Nisa", "Al-Ma'idah", "Al-An'am", "Al-A'raf", "Al-Anfal", "At-Tawbah", "Yunus",
+            "Hud", "Yusuf", "Ar-Ra'd", "Ibrahim", "Al-Hijr", "An-Nahl", "Al-Isra", "Al-Kahf", "Maryam", "Ta-Ha",
+            "Al-Anbiya", "Al-Hajj", "Al-Mu'minun", "An-Nur", "Al-Furqan", "Ash-Shu'ara", "An-Naml", "Al-Qasas", "Al-Ankabut", "Ar-Rum",
+            "Luqman", "As-Sajdah", "Al-Ahzab", "Saba", "Fatir", "Ya-Sin", "As-Saffat", "Sad", "Az-Zumar", "Ghafir",
+            "Fussilat", "Ash-Shura", "Az-Zukhruf", "Ad-Dukhan", "Al-Jathiyah", "Al-Ahqaf", "Muhammad", "Al-Fath", "Al-Hujurat", "Qaf",
+            "Adh-Dhariyat", "At-Tur", "An-Najm", "Al-Qamar", "Ar-Rahman", "Al-Waqi'ah", "Al-Hadid", "Al-Mujadilah", "Al-Hashr", "Al-Mumtahanah",
+            "As-Saff", "Al-Jumu'ah", "Al-Munafiqun", "At-Taghabun", "At-Talaq", "At-Tahrim", "Al-Mulk", "Al-Qalam", "Al-Haqqah", "Al-Ma'arij",
+            "Nuh", "Al-Jinn", "Al-Muzzammil", "Al-Muddaththir", "Al-Qiyamah", "Al-Insan", "Al-Mursalat", "An-Naba", "An-Nazi'at", "Abasa",
+            "At-Takwir", "Al-Infitar", "Al-Mutaffifin", "Al-Inshiqaq", "Al-Buruj", "At-Tariq", "Al-A'la", "Al-Ghashiyah", "Al-Fajr", "Al-Balad",
+            "Ash-Shams", "Al-Layl", "Ad-Duha", "Ash-Sharh", "At-Tin", "Al-Alaq", "Al-Qadr", "Al-Bayyinah", "Al-Zalzalah", "Al-Adiyat",
+            "Al-Qari'ah", "At-Takathur", "Al-Asr", "Al-Humazah", "Al-Fil", "Quraysh", "Al-Ma'un", "Al-Kawthar", "Al-Kafirun", "An-Nasr",
+            "Al-Masad", "Al-Ikhlas", "Al-Falaq", "An-Nas"
+        ];
+
+        async function initIndex() {
+            const container = document.getElementById('indexContainer');
+            try {
+                const response = await fetch('cyber/data/verse_index.json');
+                const data = await response.json();
+
+                window.allVerses = data;
+                renderIndex(data);
+            } catch (e) {
+                container.innerHTML = `<div class="alert alert-danger">Error loading verse index.</div>`;
+            }
+        }
+
+        function renderIndex(verses) {
+            const container = document.getElementById('indexContainer');
+            container.innerHTML = '';
+
+            let currentSurah = null;
+            let currentGroup = null;
+
+            verses.forEach(v => {
+                if (v.surah !== currentSurah) {
+                    currentSurah = v.surah;
+                    currentGroup = document.createElement('div');
+                    currentGroup.className = 'surah-group';
+                    currentGroup.innerHTML = `<h2 class="surah-header">
+                        <span>${v.surah}. ${surahNames[v.surah]}</span>
+                    </h2>`;
+                    container.appendChild(currentGroup);
+                }
+
+                v.mentions.forEach((m, idx) => {
+                    const card = document.createElement('a');
+                    card.className = 'verse-card';
+                    card.href = `ihya-cyberworld.html?book=${m.book_id}&verse=${v.verse_key}`;
+
+                    card.innerHTML = `
+                        <div class="verse-meta">VERSE ${v.verse_key} &bull; BOOK ${m.book_id}</div>
+                        <div class="quran-plain">${v.haleem_text}</div>
+                        <div class="arabic-preview">${m.arabic_text}</div>
+                        <div class="english-preview">${m.english_text}</div>
+                    `;
+                    currentGroup.appendChild(card);
+                });
+            });
+        }
+
+        document.getElementById('verseSearch').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = window.allVerses.filter(v => {
+                const sName = surahNames[v.surah].toLowerCase();
+                const vk = v.verse_key.toLowerCase();
+                return sName.includes(term) || vk.includes(term);
+            });
+            renderIndex(filtered);
+        });
+
+        initIndex();
+    </script>
+</body>
+
+</html>
